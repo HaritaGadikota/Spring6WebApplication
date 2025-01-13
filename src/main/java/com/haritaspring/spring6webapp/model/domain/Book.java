@@ -2,6 +2,7 @@ package com.haritaspring.spring6webapp.model.domain;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,9 +18,19 @@ public class Book {
     //The @JoinColumn annotation inside joinColumns and inverseJoinColumns tells JPA which foreign key
     //columns in the join table correspond to the primary keys in the associated entities.
 
+
+
     @ManyToMany
     @JoinTable(name="author_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors;
+    private Set<Author> authors = new HashSet<>( );
+
+    public Set<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
+    }
 
 
     public Long getId() {
@@ -47,7 +58,7 @@ public class Book {
     }
 
     @Override
-    public String toString() {
+    public String  toString() {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +

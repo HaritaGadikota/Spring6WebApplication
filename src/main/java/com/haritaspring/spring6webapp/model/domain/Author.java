@@ -2,6 +2,7 @@ package com.haritaspring.spring6webapp.model.domain;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,8 +18,15 @@ public class Author {
     //MappingBy is used to indicate that this side of the relationship is the inverse side
     //So it means that the books field is managed by the authors field in the Book entity
     @ManyToMany(mappedBy = "authors")
-    private Set<Book> books;
+    private Set<Book> books = new HashSet<>();
 
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
 
     public Long getId() {
         return id;
