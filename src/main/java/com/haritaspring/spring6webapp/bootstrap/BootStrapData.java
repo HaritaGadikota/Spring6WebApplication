@@ -53,6 +53,12 @@ public class BootStrapData implements CommandLineRunner {
         Author tammisave = authorRepository.save(tammi);
         Book insposave = bookRepository.save(inspo);
 
+        //Till here we have created two seperate databases but we dont have the connection between them
+        hazelsave.getBooks().add(introsave); // created an association //since it is many to many we need the connect on both side
+        tammisave.getBooks().add(insposave); //add() is used to update set - MANYTOMANYRELATIONSHIPS
+        introsave.getAuthors().add(hazelsave);
+        insposave.getAuthors().add(tammisave);
+
         Publisher akki = new Publisher();
         akki.setPublisherName("Akki");
         akki.setAddress("1");
@@ -70,16 +76,14 @@ public class BootStrapData implements CommandLineRunner {
         Publisher akkisave = publisherRepository.save(akki);
         Publisher ammusave = publisherRepository.save(ammu);
 
-        //Till here we have created two seperate databases but we dont have the connection between them
-        hazelsave.getBooks().add(introsave); // created an association
-        tammisave.getBooks().add(insposave);
+
         //Persisting the association
         authorRepository.save(hazelsave);
         authorRepository.save(tammisave);
 
         //Joining Book with the publisher
-        introsave.setPublisher(akkisave);
-        insposave.setPublisher(ammusave);
+        introsave.setPublisher(akkisave);  //SINCE IT IS ONE TO MANY - We have added book to one publisher
+        insposave.setPublisher(ammusave); //set() is used when we are updating a singlr value- OnetoMany and onetoone relationships
         //persisting
         bookRepository.save(introsave);
         bookRepository.save(insposave);
