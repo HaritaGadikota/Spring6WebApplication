@@ -52,18 +52,6 @@ public class BootStrapData implements CommandLineRunner {
 
         Author tammisave = authorRepository.save(tammi);
         Book insposave = bookRepository.save(inspo);
-        //Till here we have created two seperate databases but we dont have the connection between them
-
-        hazelsave.getBooks().add(introsave); // created an association
-        tammisave.getBooks().add(insposave);
-
-        //Persisting the association
-        authorRepository.save(hazelsave);
-        authorRepository.save(tammisave);
-
-        System.out.println("In BootStrap");
-        System.out.println("Author Count: " +authorRepository.count());
-        System.out.println("Book Count: " +bookRepository.count());
 
         Publisher akki = new Publisher();
         akki.setPublisherName("Akki");
@@ -81,6 +69,24 @@ public class BootStrapData implements CommandLineRunner {
 
         Publisher akkisave = publisherRepository.save(akki);
         Publisher ammusave = publisherRepository.save(ammu);
+
+        //Till here we have created two seperate databases but we dont have the connection between them
+        hazelsave.getBooks().add(introsave); // created an association
+        tammisave.getBooks().add(insposave);
+        //Persisting the association
+        authorRepository.save(hazelsave);
+        authorRepository.save(tammisave);
+
+        //Joining Book with the publisher
+        introsave.setPublisher(akkisave);
+        insposave.setPublisher(ammusave);
+        //persisting
+        bookRepository.save(introsave);
+        bookRepository.save(insposave);
+
+        System.out.println("In BootStrap");
+        System.out.println("Author Count: " +authorRepository.count());
+        System.out.println("Book Count: " +bookRepository.count());
         System.out.println("Publisher count: " +publisherRepository.count());
 
     }
