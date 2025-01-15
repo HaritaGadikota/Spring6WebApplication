@@ -19,6 +19,7 @@ public class BookController {
     public String getBooks(Model model){
         model.addAttribute("books", bookService.findAll());
         return "books"; // dont return the String book but it return the view names "books"
+        //The above line isgoing to tell the spring controller to look for a view called books
     }
 
 }
